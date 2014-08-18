@@ -1,0 +1,1 @@
+<PHP getenv("VCAP_SERVICES");

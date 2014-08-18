@@ -1,0 +1,131 @@
+body {
+	margin:0;
+	padding:0;
+}
+
+#qipan, .board {
+	width:421px;
+	height:466px;
+	background: url(../images/bg.jpg);
+	float:left;
+}
+
+.qizi {
+	width:46px;
+	height:46px;
+	position:absolute;
+}
+
+.selected {
+	border: 2px solid red;
+}
+
+
+.redXiang {
+	background:url(../images/red_x.png);
+}
+
+.redChe {
+	background:url(../images/red_c.png);
+}
+.redMa {
+	background:url(../images/red_m.png);
+}
+
+.redShi {
+	background:url(../images/red_s.png);
+}
+.redJiang {
+	background:url(../images/red_j.png);
+}
+.redBing {
+	background:url(../images/red_b.png);
+}
+.redPao {
+	background:url(../images/red_p.png);
+}
+
+.blackChe {
+	background:url(../images/black_c.png);
+}
+.blackMa {
+	background:url(../images/black_m.png);
+}
+.blackXiang {
+	background:url(../images/black_x.png);
+}
+.blackShi {
+	background:url(../images/black_s.png);
+}
+.blackJiang {
+	background:url(../images/black_j.png);
+}
+.blackBing {
+	background:url(../images/black_b.png);
+}
+.blackPao {
+	background:url(../images/black_p.png);
+}
+
+.redXiang_c {
+	background:url(../images/red_x_c.png);
+}
+
+.redChe_c {
+	background:url(../images/red_c_c.png);
+}
+.redMa_c {
+	background:url(../images/red_m_c.png);
+}
+
+.redShi_c {
+	background:url(../images/red_s_c.png);
+}
+.redJiang_c {
+	background:url(../images/red_j_c.png);
+}
+.redBing_c {
+	background:url(../images/red_b_c.png);
+}
+.redPao_c {
+	background:url(../images/red_p_c.png);
+}
+
+.blackChe_c {
+	background:url(../images/black_c_c.png);
+}
+.blackMa_c {
+	background:url(../images/black_m_c.png);
+}
+.blackXiang_c {
+	background:url(../images/black_x_c.png);
+}
+.blackShi_c {
+	background:url(../images/black_s_c.png);
+}
+.blackJiang_c {
+	background:url(../images/black_j_c.png);
+}
+.blackBing_c {
+	background:url(../images/black_b_c.png);
+}
+.blackPao_c {
+	background:url(../images/black_p_c.png);
+}
+#kuang {
+	width:46px;
+	height:46px;
+	position:absolute;
+	background:url(../images/kuang.png);
+}
+
+#show {
+	margin-top:190px;
+	float:left;
+	width:200px;
+	margin-left:50px;
+	font-size:30px;
+}
+#show label {
+	
+}
