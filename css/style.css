@@ -20,6 +20,18 @@ body {
 	border: 2px solid red;
 }
 
+.color-div {
+	float: left;
+	margin-left: 50px;
+	margin-top: 220px;
+}
+
+#color {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: 微软雅黑;
+	color: red;
+}
 
 .redXiang {
 	background:url(../images/red_x.png);

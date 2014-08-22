@@ -444,7 +444,7 @@ $(document).ready(function() {
 	  	socket.emit('test', {color: 'red', x:8,y:9,x1:8,y1:7 });
 	 }
 
-	var socket = io.connect('http://localhost:8888');
+	var socket = io.connect('http://192.168.61.97:8888');
 	socket.on('move', function (data) {
 		if(data.color == board.currentColor) {
 			console.log(board.boardArr[data.x][data.y]);

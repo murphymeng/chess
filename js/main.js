@@ -4,9 +4,57 @@ var initLeft = 28, // 棋盘左上角left值
 var xianshou = 'r';
 var qiziId = 1;
 var cw = ch = 46; // 每个棋格的宽度和高度
-var myColor = 'red';
+// var myColor = 'red';
 var x, y;
+var currentColor = 'red';
 
+
+var socket = io.connect('http://192.168.61.97:8888');
+
+socket.on('move', function (data) {
+    if (data.rid !== rid) {
+        return false;
+    }
+    var qizi = board.getQizi(data.id),
+        toX, toY
+    if (myColor === qizi.color) {
+        toX = data.x;
+        toY = data.y;
+    } else {
+        toX = 8 - data.x;
+        toY = 9 - data.y;
+    }
+    qizi.moveTo(toX, toY);
+
+    if (currentColor === 'red') {
+        currentColor = 'black';
+        $('#color').html('黑方回合');
+        $('#color').css({'color': 'black'})
+    } else {
+        currentColor = 'red';
+        $('#color').html('红方回合');
+        $('#color').css({'color': 'red'})
+    }
+});
+
+socket.on('eat', function (data) {
+    if (data.rid !== rid) {
+        return false;
+    }
+    var qizi = board.getQizi(data.fromId),
+        toQizi = board.getQizi(data.toId);
+    qizi.eat(toQizi);
+
+    if (currentColor === 'red') {
+        currentColor = 'black';
+        $('#color').html('黑方回合');
+        $('#color').css({'color': 'black'})
+    } else {
+        currentColor = 'red';
+        $('#color').html('红方回合');
+        $('#color').css({'color': 'red'})
+    }
+});
 
 $(function() {
     board = new Board({el: $('#board')});

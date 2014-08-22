@@ -35,6 +35,7 @@ var Qizi = Backbone.View.extend({
     });
 
     board.arr[me.x][me.y] = me;
+    board.qiziObj[me.id] = me;
   },
 
   setXY: function(x, y) {
@@ -43,6 +44,11 @@ var Qizi = Backbone.View.extend({
   },
 
   onClick: function() {
+
+    if (myColor !== currentColor) {
+      return;
+    }
+
     if (!board.selected) {
         if (myColor !== this.color) {
           return;
@@ -50,6 +56,11 @@ var Qizi = Backbone.View.extend({
         board.selected = this;
         this.$el.addClass('selected');
     } else if (board.selected !== this && board.selected.color !== this.color) {
+         socket.emit('eat', {
+            fromId: board.selected.id,
+            toId: this.id,
+            rid: rid
+        });
         board.selected.eat(this);
     } else if (board.selected === this || board.selected.color === this.color) {
         board.selected.deSelect();
@@ -60,10 +71,11 @@ var Qizi = Backbone.View.extend({
     this.$el.removeClass('selected');
     board.selected = null;
   },
-  moveTo: function(left, top, fn) {
+
+  moveTo: function(x, y, fn) {
     var me = this,
-      x = Math.round((left - initLeft) / cw),
-      y = Math.round((top - initTop) / ch);
+      left = x * cw + initLeft - cw / 2,
+      top  = y * ch + initTop - ch / 2;
 
     me.deSelect();
 
@@ -80,7 +92,8 @@ var Qizi = Backbone.View.extend({
     if (qizi.color === me.color) {
       return;
     }
-    me.moveTo(qizi.$el.position().left, qizi.$el.position().top, function() {
+
+    me.moveTo(qizi.x, qizi.y, function() {
       qizi.$el.remove();
     });
   },
@@ -138,29 +151,48 @@ var Qizi = Backbone.View.extend({
         return false;
         break;
       case 'x':
-        if (y >=5 && y <= 9 &&
+        if (this.color === myColor &&
+          y >=5 && y <= 9 &&
           Math.abs(x - this.x) == 2 &&
           Math.abs(y - this.y) == 2 && 
           !board.arr[(x + this.x) / 2][(y + this.y) / 2]) {
 
+          return true;
+        } else if (this.color !== myColor &&
+          y >= 0 && y <= 4 &&
+          Math.abs(x - this.x) == 2 &&
+          Math.abs(y - this.y) == 2 && 
+          !board.arr[(x + this.x) / 2][(y + this.y) / 2]) {
           return true;
         } else {
           return false;
         }
         break;
       case 's':
-        if (x >= 3 && x <= 5 &&
+        if (this.color === myColor &&
+          x >= 3 && x <= 5 &&
           y >= 7 && y <= 9 &&
           Math.abs(x - this.x) == 1 && Math.abs(y - this.y) == 1) {
 
+          return true;
+        } else if (this.color !== myColor &&
+          x >= 3 && x <= 5 &&
+          y >= 0 && y <= 2 &&
+          Math.abs(x - this.x) == 1 && Math.abs(y - this.y) == 1) {
           return true;
         } else {
           return false;
         }
         break;
       case 'j':
-        if(x >= 3 && x <= 5 &&
+        if(this.color === myColor &&
+          x >= 3 && x <= 5 &&
           y >= 7 && y <= 9 &&
+          ((Math.abs(x - this.x) == 1 && y == this.y) || (Math.abs(y - this.y) == 1 && x == this.x))) {
+          return true;
+        } else if (this.color !== myColor &&
+          x >= 3 && x <= 5 &&
+          y >= 0 && y <= 2 &&
           ((Math.abs(x - this.x) == 1 && y == this.y) || (Math.abs(y - this.y) == 1 && x == this.x))) {
           return true;
         } else {
@@ -201,12 +233,20 @@ var Qizi = Backbone.View.extend({
         }
         break;
       case 'b':
-        if( y == this.y - 1 && this.x == x ) {
-          return true;
-        } else if( y <= 4 && ((this.x + 1 == x) || (this.x - 1 == x)) ) {
-          return true;
+        if ( (Math.abs(this.y - y) + Math.abs(this.x - x)) !== 1 ) {
+          return false;
+        } else {
+          if (x === this.x && y === this.y - 1 && this.color === myColor) {
+            return true;
+          } else if (x === this.x && y === this.y + 1 && this.color !== myColor) {
+            return true;
+          } else if (y === this.y && Math.abs(x - this.x) === 1 && y <= 4 && this.color === myColor) {
+            return true;
+          } else if (y === this.y && Math.abs(x - this.x) === 1 && y >= 5 && this.color !== myColor) {
+            return true;
+          }
+          return false;
         }
-        return false;
         break;
     }
   },

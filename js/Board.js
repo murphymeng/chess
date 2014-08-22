@@ -6,6 +6,8 @@ var Board = Backbone.View.extend({
     "click": "onClick"
   },
 
+  qiziObj: {},
+
   initialize: function() {
     var me = this;
     me.arr = [];
@@ -15,6 +17,10 @@ var Board = Backbone.View.extend({
         me.arr[i][j] = null;
       }
     }
+  },
+
+  getQizi: function(id) {
+    return this.qiziObj[id];
   },
 
   onClick: function(e) {
@@ -44,7 +50,12 @@ var Board = Backbone.View.extend({
       return;
     }
 
-    me.selected.moveTo(left, top);
+    socket.emit('move', {
+        id: me.selected.id,
+        x: x,
+        y: y,
+        rid: rid
+    });
   }
 
 });
