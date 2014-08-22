@@ -6,8 +6,9 @@
     <title>中国象棋</title>
     <link rel="stylesheet" href="css/style.css"/>
     <script type="text/javascript">
-        var myColor = '<?php echo $_GET['color'];?>';
-        var rid = <?php if(isset($_GET['rid'])) {echo $_GET['rid'];} else {echo 1;}?>;
+        myColor = '<?php echo $_GET['color'];?>';
+        rid = <?php if(isset($_GET['rid'])) {echo $_GET['rid'];} else {echo 1;}?>;
+        serverIp = '<?php echo $_SERVER['REMOTE_ADDR'];?>';
     </script>
     <script src="js/socket.io/socket.io.js"></script>
     <script src="js/vendor/jquery.js"></script>

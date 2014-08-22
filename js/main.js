@@ -9,7 +9,7 @@ var x, y;
 var currentColor = 'red';
 
 
-var socket = io.connect('http://192.168.61.97:8888');
+var socket = io.connect(serverIp + ':8888');
 
 socket.on('move', function (data) {
     if (data.rid !== rid) {

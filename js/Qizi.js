@@ -231,6 +231,7 @@ var Qizi = Backbone.View.extend({
         } else if(countTemp == 1 && board.arr[x][y]) {
           return true;
         }
+        return false;
         break;
       case 'b':
         if ( (Math.abs(this.y - y) + Math.abs(this.x - x)) !== 1 ) {
